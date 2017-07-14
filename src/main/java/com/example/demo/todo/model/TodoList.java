@@ -2,15 +2,18 @@ package com.example.demo.todo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * Created by christophernorte on 14/07/17.
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class TodoList {
-private String libelle;
+    private int id;
+    private String libelle;
 
 }
