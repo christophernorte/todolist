@@ -5,9 +5,8 @@ import com.example.demo.todo.repository.TodoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -24,6 +23,18 @@ public class TodoResource {
     @Produces("application/json")
     public List<TodoList> all() {
         return todoListRepository.all();
+    }
+
+    @POST
+    @Path("/add")
+    @Consumes("application/json")
+    public Response add(TodoList todoList) {
+        if(todoListRepository.add(todoList))
+        {
+            return Response.status(Response.Status.CREATED).build();
+        }else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

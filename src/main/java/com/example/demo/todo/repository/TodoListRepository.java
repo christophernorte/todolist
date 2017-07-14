@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class TodoListRepository {
 
-    private static final String INSERT="INSERT INTO TODOLIST (name) VALUES (?)";
+    private static final String INSERT="INSERT INTO TODOLIST (LIBELLE) VALUES (?)";
     private static final String SELECT_ALL="SELECT * FROM TODOLIST";
 
     @Autowired
@@ -23,9 +23,10 @@ public class TodoListRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void add(TodoList todoList)
+    public boolean add(TodoList todoList)
     {
-        jdbcTemplate.update(INSERT,todoList.getLibelle());
+        int rows = jdbcTemplate.update(INSERT,todoList.getLibelle());
+        return rows > 0;
     }
 
     public List<TodoList> all()
