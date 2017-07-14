@@ -10,12 +10,12 @@ import javax.ws.rs.Produces;
  *
  */
 @Component
-@Path("/health")
+@Path("/todo")
 public class TodoResource {
 
     @GET
     @Produces("application/json")
-    public String sayHello() {
+    public String add() {
         return "test";
     }
 
