@@ -14,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TodoList {
-    @JsonIgnore
     private int id;
     private String libelle;
 

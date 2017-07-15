@@ -37,4 +37,16 @@ public class TodoResource {
         }
     }
 
+    @DELETE
+    @Path("/delete")
+    @Consumes("application/json")
+    public Response delete(TodoList todoList) {
+        if(todoListRepository.delete(todoList))
+        {
+            return Response.status(Response.Status.OK).build();
+        }else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
