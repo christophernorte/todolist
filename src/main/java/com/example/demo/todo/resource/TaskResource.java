@@ -54,7 +54,6 @@ public class TaskResource {
     @Consumes("application/json")
     public Response delete(Task task) {
 
-
         if(taskRepository.delete(task))
         {
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -66,6 +65,9 @@ public class TaskResource {
     @PUT
     @Consumes("application/json")
     public Response update(Task task) {
+        TodoList relatedTodoList = getRelatedTodoList();
+        task.setTodoList(relatedTodoList);
+
         if(taskRepository.update(task))
         {
             return Response.status(Response.Status.OK).build();

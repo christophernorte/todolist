@@ -18,7 +18,7 @@ public class TaskRepository {
     private static final String INSERT="INSERT INTO TASK (NAME,STATE,IDTODOLIST) VALUES (?,?,?)";
     private static final String SELECT_ALL="SELECT * FROM TASK WHERE IDTODOLIST=?";
     private static final String DELETE="DELETE FROM TASK WHERE id=?";
-    private static final String UPDATE="UPDATE TASK SET LIBELLE=?,STATE=?,IDTODOLIST=? WHERE id=?";
+    private static final String UPDATE="UPDATE TASK SET NAME=?,STATE=?,IDTODOLIST=? WHERE id=?";
 
     @Autowired
     private TaskRowMapper taskRowMapper;
@@ -40,7 +40,7 @@ public class TaskRepository {
 
     public boolean update(Task task)
     {
-        int rows = jdbcTemplate.update(UPDATE,task.getName(),task.getState(),task.getTodoList().getId());
+        int rows = jdbcTemplate.update(UPDATE,task.getName(),task.getState().toString(),task.getTodoList().getId(),task.getId());
         return rows > 0;
     }
 
