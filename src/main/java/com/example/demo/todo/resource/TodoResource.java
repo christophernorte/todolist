@@ -49,4 +49,16 @@ public class TodoResource {
         }
     }
 
+    @POST
+    @Path("/update")
+    @Consumes("application/json")
+    public Response update(TodoList todoList) {
+        if(todoListRepository.update(todoList))
+        {
+            return Response.status(Response.Status.OK).build();
+        }else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

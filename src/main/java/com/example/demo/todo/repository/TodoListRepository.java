@@ -17,6 +17,7 @@ public class TodoListRepository {
     private static final String INSERT="INSERT INTO TODOLIST (LIBELLE) VALUES (?)";
     private static final String SELECT_ALL="SELECT * FROM TODOLIST";
     private static final String DELETE="DELETE FROM TODOLIST WHERE id=?";
+    private static final String UPDATE="UPDATE TODOLIST SET LIBELLE=? WHERE id=?";
 
     @Autowired
     private TodoListRowMapper todoListRowMapper;
@@ -33,6 +34,12 @@ public class TodoListRepository {
     public boolean delete(TodoList todoList)
     {
         int rows = jdbcTemplate.update(DELETE,todoList.getId());
+        return rows > 0;
+    }
+
+    public boolean update(TodoList todoList)
+    {
+        int rows = jdbcTemplate.update(UPDATE,todoList.getLibelle(),todoList.getId());
         return rows > 0;
     }
 
