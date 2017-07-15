@@ -28,7 +28,7 @@ public class TaskRepository {
 
     public boolean add(Task task)
     {
-        int rows = jdbcTemplate.update(INSERT,task.getName(),task.getState(),task.getTodoList().getId());
+        int rows = jdbcTemplate.update(INSERT,task.getName(),task.getState().toString(),task.getTodoList().getId());
         return rows > 0;
     }
 

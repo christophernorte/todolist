@@ -23,9 +23,6 @@ public class TaskRowMapper implements RowMapper<Task> {
         State state = State.valueOf(resultSet.getString("state"));
         task.setState(state);
 
-        TodoList todoList = new TodoList();
-        todoList.setId(resultSet.getInt("IDTODOLIST"));
-        task.setTodoList(todoList);
         return task;
     }
 }

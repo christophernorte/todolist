@@ -1,5 +1,6 @@
 package com.example.demo.todo.resource;
 
+import com.example.demo.todo.model.State;
 import com.example.demo.todo.model.Task;
 import com.example.demo.todo.model.TodoList;
 import com.example.demo.todo.repository.TaskRepository;
@@ -20,17 +21,26 @@ public class TaskResource {
     @Autowired
     private TaskRepository taskRepository;
 
+    @PathParam("idTodoList")
+    private int idTodoList;
+
     @GET
     @Produces("application/json")
-    public List<Task> all(@PathParam("idTodoList") int idTodoList) {
-        TodoList todoList = new TodoList();
-        todoList.setId(idTodoList);
+    public List<Task> all() {
+        TodoList todoList = getRelatedTodoList();
         return taskRepository.all(todoList);
     }
 
     @POST
     @Consumes("application/json")
-    public Response add(@PathParam("idTodoList") int idTodoList, Task task) {
+    public Response add(Task task) {
+        TodoList todoList = getRelatedTodoList();
+        task.setTodoList(todoList);
+
+        if(task.getState() == null)
+        {
+            task.setState(State.TODO);
+        }
 
         if(taskRepository.add(task))
         {
@@ -42,7 +52,9 @@ public class TaskResource {
 
     @DELETE
     @Consumes("application/json")
-    public Response delete(@PathParam("idTodoList") int idTodoList, Task task) {
+    public Response delete(Task task) {
+
+
         if(taskRepository.delete(task))
         {
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -53,13 +65,20 @@ public class TaskResource {
 
     @PUT
     @Consumes("application/json")
-    public Response update(@PathParam("idTodoList") int idTodoList, Task task) {
+    public Response update(Task task) {
         if(taskRepository.update(task))
         {
             return Response.status(Response.Status.OK).build();
         }else {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    private TodoList getRelatedTodoList()
+    {
+        TodoList todoList = new TodoList();
+        todoList.setId(idTodoList);
+        return todoList;
     }
 
 }
