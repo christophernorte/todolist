@@ -1,5 +1,6 @@
 package com.example.demo.todo.config;
 
+import com.example.demo.todo.resource.TaskResource;
 import com.example.demo.todo.resource.TodoResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
@@ -14,5 +15,6 @@ public class RestConfig extends ResourceConfig{
 
     public RestConfig() {
         register(TodoResource.class);
+        register(TaskResource.class);
     }
 }

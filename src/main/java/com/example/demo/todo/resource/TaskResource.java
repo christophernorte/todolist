@@ -1,7 +1,8 @@
 package com.example.demo.todo.resource;
 
+import com.example.demo.todo.model.Task;
 import com.example.demo.todo.model.TodoList;
-import com.example.demo.todo.repository.TodoListRepository;
+import com.example.demo.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,22 +14,25 @@ import java.util.List;
  *
  */
 @Component
-@Path("/todos")
-public class TodoResource {
+@Path("/todos/{idTodoList}/tasks")
+public class TaskResource {
 
     @Autowired
-    private TodoListRepository todoListRepository;
+    private TaskRepository taskRepository;
 
     @GET
     @Produces("application/json")
-    public List<TodoList> all() {
-        return todoListRepository.all();
+    public List<Task> all(@PathParam("idTodoList") int idTodoList) {
+        TodoList todoList = new TodoList();
+        todoList.setId(idTodoList);
+        return taskRepository.all(todoList);
     }
 
     @POST
     @Consumes("application/json")
-    public Response add(TodoList todoList) {
-        if(todoListRepository.add(todoList))
+    public Response add(@PathParam("idTodoList") int idTodoList, Task task) {
+
+        if(taskRepository.add(task))
         {
             return Response.status(Response.Status.CREATED).build();
         }else {
@@ -38,8 +42,8 @@ public class TodoResource {
 
     @DELETE
     @Consumes("application/json")
-    public Response delete(TodoList todoList) {
-        if(todoListRepository.delete(todoList))
+    public Response delete(@PathParam("idTodoList") int idTodoList, Task task) {
+        if(taskRepository.delete(task))
         {
             return Response.status(Response.Status.NO_CONTENT).build();
         }else {
@@ -49,8 +53,8 @@ public class TodoResource {
 
     @PUT
     @Consumes("application/json")
-    public Response update(TodoList todoList) {
-        if(todoListRepository.update(todoList))
+    public Response update(@PathParam("idTodoList") int idTodoList, Task task) {
+        if(taskRepository.update(task))
         {
             return Response.status(Response.Status.OK).build();
         }else {
